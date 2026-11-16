@@ -1,0 +1,390 @@
+{
+  "facts": [
+    {
+      "@type": "type.googleapis.com/BrowserIntercept",
+      "openUrlBrowserPkg": "",
+      "tag": "链接",
+      "customContextDataKey": {},
+      "id": "F-085d15c6-fecd-49a7-9cbc-6cc694fb653d",
+      "openUrlAfterTrigger": false
+    },
+    {
+      "@type": "type.googleapis.com/ActivityStarted",
+      "components": [
+        {
+          "pkg": {
+            "pkgName": "com.tencent.mm"
+          },
+          "className": "com.tencent.mm.plugin.webview.ui.tools.MMWebViewUI"
+        }
+      ],
+      "tag": "微信",
+      "customContextDataKey": {},
+      "id": "F-6ee8da7c-d725-4cb7-9fc0-68580b298a52"
+    }
+  ],
+  "actions": [
+    {
+      "@type": "type.googleapis.com/ShowAlertDialog",
+      "message": "url\n{url}\n\nhost\n{host}\n\nscheme\n{scheme}\n\npath\n{path}\n\nquery\n{query}\n\napp\n{sourceAppPkg}",
+      "cancelable": true,
+      "style": {
+        "fontScale": 1.0
+      },
+      "customContextDataKey": {},
+      "isDisabled": true,
+      "id": "A-3004dce3-5bce-454e-88f9-af19c889a9b9"
+    },
+    {
+      "@type": "type.googleapis.com/SwitchCase",
+      "case": [
+        {
+          "case": [
+            {
+              "@type": "type.googleapis.com/RequireFactTag",
+              "tag": "微信",
+              "customContextDataKey": {},
+              "id": "C-649461ae-cd5e-472d-aea0-cf82fc30d619"
+            }
+          ],
+          "action": [
+            {
+              "@type": "type.googleapis.com/ExecuteJS",
+              "expression": "var text = activityIntentUri;\nvar pattern = /S.rawUrl=(.*?);/;   \nvar match = text.match(pattern);\nif (match) {\n    var result = match[1];  \n    decodeURIComponent(result);\n}else \"nolink\"",
+              "customContextDataKey": {
+                "keys": [
+                  {
+                    "first": "jsRet",
+                    "second": "url"
+                  }
+                ]
+              },
+              "id": "A-7d834ab6-8b01-4e81-a0d9-002c30d8d2fd"
+            },
+            {
+              "@type": "type.googleapis.com/WriteLocalVar",
+              "varName": "urlA",
+              "valueAsString": "{url}",
+              "autoCreateIfMissing": true,
+              "customContextDataKey": {},
+              "id": "A-124d5d5d-e7e9-45ee-8367-6a27e65dd1bd"
+            },
+            {
+              "@type": "type.googleapis.com/ShowOverlayButton",
+              "buttonSettings": [
+                {
+                  "actions": [
+                    {
+                      "@type": "type.googleapis.com/WriteLocalVar",
+                      "varName": "url",
+                      "valueAsString": "localVarOf$urlA",
+                      "autoCreateIfMissing": true,
+                      "customContextDataKey": {},
+                      "id": "A-1fcfdd0f-a250-4ccb-bca5-9f147556ea90"
+                    },
+                    {
+                      "@type": "type.googleapis.com/OpenUrl",
+                      "url": "localVarOf$url",
+                      "browserPkg": "tornaco.apps.shortx",
+                      "customContextDataKey": {},
+                      "id": "A-46ebb30b-7ea0-4440-83bc-b963cf08faf2"
+                    },
+                    {
+                      "@type": "type.googleapis.com/CloseActivity",
+                      "component": {},
+                      "customContextDataKey": {},
+                      "isDisabled": true,
+                      "id": "A-75ac7ae0-83ad-439f-bd4d-a2564d1d116e"
+                    },
+                    {
+                      "@type": "type.googleapis.com/HideOverlayButton",
+                      "overlayTags": [
+                        "FloatButton"
+                      ],
+                      "customContextDataKey": {},
+                      "id": "A-850a54e7-e56b-433a-a19d-d21b0ac872ae"
+                    }
+                  ],
+                  "label": "打开链接？\n{url}",
+                  "id": "BTN-d5a59cf7-dbb5-44f8-a0ba-1fdb82c5cfed"
+                }
+              ],
+              "tag": "FloatButton",
+              "maxHeightInDp": 115,
+              "maxWidthInDp": 115,
+              "backgroundAlpha": 0.8,
+              "buttonMinWidth": 500,
+              "enableGlobalDrag": true,
+              "disableAutoEdge": true,
+              "customContextDataKey": {},
+              "id": "A-00d463ee-2205-4505-84df-3c75b662908c"
+            },
+            {
+              "@type": "type.googleapis.com/Delay",
+              "timeString": "2",
+              "timeUnit": "TimeUnit_S",
+              "customContextDataKey": {},
+              "id": "A-175b05aa-f337-4c3c-8bed-80c721f1bcef"
+            },
+            {
+              "@type": "type.googleapis.com/HideOverlayButton",
+              "overlayTags": [
+                "FloatButton"
+              ],
+              "customContextDataKey": {},
+              "id": "A-1943f46b-d36b-49c2-852d-6bac74be7bf9"
+            }
+          ],
+          "description": "微信",
+          "id": "Case-0ac0c5a9-afd1-4ab7-b000-f184275f9979",
+          "isBreak": true
+        },
+        {
+          "case": [
+            {
+              "@type": "type.googleapis.com/RequireFactTag",
+              "tag": "链接",
+              "customContextDataKey": {},
+              "id": "C-5007bc77-8d79-495b-8ceb-1f8fa00e39ce"
+            }
+          ],
+          "action": [
+            {
+              "@type": "type.googleapis.com/IfThenElse",
+              "If": [
+                {
+                  "@type": "type.googleapis.com/EvaluateContextVar",
+                  "op": "Contains",
+                  "varName": "url",
+                  "payload": {
+                    "value": "github"
+                  },
+                  "isDisabled": true,
+                  "customContextDataKey": {},
+                  "id": "C-43a0afb6-9ea9-4669-8c42-d985778d29c9"
+                },
+                {
+                  "@type": "type.googleapis.com/VPNIsConnected",
+                  "customContextDataKey": {},
+                  "isInvert": true,
+                  "id": "C-2c35838e-d9fb-4303-9a47-3ca5515cc32d"
+                },
+                {
+                  "@type": "type.googleapis.com/MatchJS",
+                  "expression": "(function() {\n    // ========================================================\n    // 📌 1. 【可配置区域】修改你的目标变量和正则表达式\n    // ========================================================\n    \n    // 传入的待检查变量（在 ShortX 中可以写成 shortx.getVariable(\"LinkUrl\")）\n    var url = localVarOf$url; \n\n    // 需要匹配的正则表达式数组\n    var regexPatterns = [\n        /^https:\\/\\/github\\.com\\//  // 匹配以 https://github.com/ 开头\n    ];\n\n    // ========================================================\n    // ⚙️ 2. 【核心逻辑区域】通用遍历匹配逻辑（无需修改）\n    // ========================================================\n    var isMatched = false;\n\n    // 如果变量为空，直接返回 false\n    if (!url) {\n        return false;\n    }\n\n    // 遍历正则数组，只要其中有一个正则表达式匹配成功，就将状态标记为 true 并跳出循环\n    for (var i = 0; i < regexPatterns.length; i++) {\n        if (regexPatterns[i].test(url)) {\n            isMatched = true;\n            break; // 匹配到一个就足够了，立刻提前结束循环\n        }\n    }\n\n    // ========================================================\n    // 🚀 3. 【输出结果】返回布尔值结果\n    // ========================================================\n    return isMatched; // 匹配成功输出 true，全部不匹配输出 false\n})();\n",
+                  "customContextDataKey": {},
+                  "id": "C-07843571-1ecf-424a-9028-eeff19947e8e"
+                }
+              ],
+              "IfActions": [
+                {
+                  "@type": "type.googleapis.com/FromDA",
+                  "daId": "DA-97c74fa7-f645-464d-a0cf-fd7a6a195db5",
+                  "customContextDataKey": {},
+                  "id": "A-3a2ec2e5-066d-4768-b45f-945f770d6d86"
+                }
+              ],
+              "customContextDataKey": {},
+              "id": "A-ff10333a-941c-4551-b1ef-74907d00a2bd"
+            },
+            {
+              "@type": "type.googleapis.com/IfThenElse",
+              "If": [
+                {
+                  "@type": "type.googleapis.com/EvaluateContextVar",
+                  "op": "Contains",
+                  "varName": "url",
+                  "payload": {
+                    "value": "coolapk.com/link?url="
+                  },
+                  "customContextDataKey": {},
+                  "id": "C-fe2f987e-ee3b-4cad-b789-61e1bdf09f17"
+                }
+              ],
+              "IfActions": [
+                {
+                  "@type": "type.googleapis.com/ExecuteJS",
+                  "expression": "url = decodeURIComponent(url.replace(/^.*[?&]url=([^&]+).*$/, \"$1\"));",
+                  "customContextDataKey": {
+                    "keys": [
+                      {
+                        "first": "jsRet",
+                        "second": "url"
+                      }
+                    ]
+                  },
+                  "id": "A-1272d9e2-d21d-484d-ad73-b26e113ce8ac"
+                }
+              ],
+              "customContextDataKey": {},
+              "id": "A-f8106efd-0fef-4446-b2aa-d7145d9a05bc"
+            },
+            {
+              "@type": "type.googleapis.com/CreateLocalVar",
+              "localVar": {
+                "name": "needTypePkgs",
+                "type": {
+                  "@type": "type.googleapis.com/StringVar"
+                }
+              },
+              "customContextDataKey": {},
+              "note": "创建局部变量 needTypePkgs：需要带 mimeType 才能打开的应用包名（逗号分隔），改名单只改下一步",
+              "id": "A-f5607182-934a-4b5c-9e6f-700112233445"
+            },
+            {
+              "@type": "type.googleapis.com/WriteLocalVar",
+              "varName": "needTypePkgs",
+              "valueAsString": "com.xychr.ghostdownloader",
+              "customContextDataKey": {},
+              "note": "需要带 type 的应用包名，分隔符支持 , ， ; ； 空格 换行。例：com.xychr.ghostdownloader, com.example.app",
+              "id": "A-60718293-a4b5-4c6d-8f70-011223344556"
+            },
+            {
+              "@type": "type.googleapis.com/CreateLocalVar",
+              "localVar": {
+                "name": "apps",
+                "type": {
+                  "@type": "type.googleapis.com/StringVar"
+                }
+              },
+              "customContextDataKey": {},
+              "note": "创建局部变量 apps，存放应用集「打开链接」的包名",
+              "id": "A-b1c2d3e4-5f60-4718-9a2b-3c4d5e6f7001"
+            },
+            {
+              "@type": "type.googleapis.com/WriteLocalVar",
+              "varName": "apps",
+              "valueAsString": "",
+              "customContextDataKey": {},
+              "note": "清空 apps，避免跨次触发残留",
+              "id": "A-c2d3e4f5-6071-4829-8b3c-4d5e6f700112"
+            },
+            {
+              "@type": "type.googleapis.com/ForEachPkgSet",
+              "pkgSet": "打开链接",
+              "action": [
+                {
+                  "@type": "type.googleapis.com/WriteLocalVar",
+                  "varName": "apps",
+                  "valueAsString": "localVarOf$apps{loopAppPkgName},",
+                  "customContextDataKey": {},
+                  "note": "追加当前应用包名",
+                  "id": "A-d3e4f560-7182-493a-9c4d-5e6f70011223"
+                }
+              ],
+              "customContextDataKey": {},
+              "note": "遍历应用集「打开链接」，累积包名到局部变量 apps",
+              "id": "A-e4f56071-8293-4a4b-8d5e-6f7001122334"
+            },
+            {
+              "@type": "type.googleapis.com/ExecuteJS",
+              "expression": "/* =====================================================================\n * 「打开链接」应用集 → 底部选择面板（离屏 Bitmap 版 · v9）\n *\n * 【为什么不能用 TextView —— 真机崩溃换来的约束】\n *   脚本经 Xposed 注入 system_server 主线程，未捕获异常 = 整机软重启。\n *   TextView.onDraw 里 Paint.setColor(int) 会把高 8 位 alpha 当成 ColorSpace id，\n *   抛 IllegalArgumentException(\"colorSpace must be an RGB color space\")，\n *   该异常由系统 Choreographer 抛出、无人接收 → system_server 挂 → 软重启。\n *\n * 【所以本脚本】\n *   1. 面板整块离屏画到一张 Bitmap，屏幕上只放一个不可点击的 ImageView；\n *   2. 颜色一律 Paint.setARGB(a,r,g,b)，绝不用 setColor(int)；\n *      不使用 setBackgroundColor / setTextColor / ColorDrawable；\n *   3. 点击不靠子 View，靠矩形命中（ImageView 保持不可点击，触摸交给父 FrameLayout）；\n *   4. 全部 UI 操作包在 try 里，任何异常只降级，绝不让异常逃逸。\n *\n * 【v9 改动 —— 按实测结果分两类，不再逐个探测】\n *   真机实测（5 个应用）：\n *     · X浏览器 / Via / 嗅觉浏览器 / FluxDown —— 都吃标准的 ACTION_VIEW + data；\n *     · Ghost Downloader —— 只在「ACTION_VIEW + mimeType」下匹配，裸 VIEW 打不开。\n *   于是不再每个应用都问系统三遍，直接按包名分两类走：\n *     NEED_TYPE 里的包  → 先 VIEW + setDataAndType(\"* /*\")，失败再试裸 VIEW\n *     其它包            → 先 VIEW + data，失败再试带 type（静默兜底）\n *   两类最后都还有「分享文本」和「显式组件拉起」兜底，失败则在面板里红字点名。\n *   名单存放在规则局部变量 needTypePkgs（WriteLocalVar 一步），改它即可，\n *   不用动脚本；分隔符支持 , ， ; ； 空格 换行。\n *\n * 【v6 改动 —— 兼容只吃「分享」的下载器】\n *   原来点应用只用一种方式启动：ACTION_VIEW + data。像 Ghost Downloader(安卓)\n *   这种在 intent-filter 里声明了 mimeType、或只从 EXTRA_TEXT 取链接的应用会\n *   解析不到，startActivity 抛 ActivityNotFoundException 被吞掉 → 点了完全没反应。\n *   现在一个应用依次试 5 种投递方式（原样打开 → 带 BROWSABLE → 带 type → 分享文本\n *   → 分享任意类型），成功才关面板；全部失败就在面板里画一行红字提示，不再静默。\n *\n * 【v5 关键改动 —— 位置终于贴底】\n *   v4 之前是「先按屏幕尺寸画全屏位图，再挂窗」，一旦窗口实际高度 ≠ dm.heightPixels\n *   （overlay 被系统限制了可用区域），ImageView 的 FIT_XY 会把整张位图纵向压缩，\n *   卡片就整体往上飘，底部空出一大块 —— 就是反复出现的「离底部还有距离」。\n *   v5 改成两拍：\n *     ① 先把一个空的 FrameLayout 挂上去（不带 FLAG_LAYOUT_NO_LIMITS）；\n *     ② 等系统布局完成，再读 root.getWidth()/getHeight() 和 root.getRootWindowInsets()，\n *        按「窗口自己的真实尺寸」画位图、定位卡片。\n *   于是位图与窗口 1:1 像素对齐，卡片底边 = 窗口高 - 该窗口底部 inset - BOTTOM_GAP_DP，\n *   不管手势导航还是三大金刚键，都自动贴到该在的位置。\n *\n * 【数据来源】应用集由原生动作 ForEachPkgSet 遍历后写入局部变量 apps，\n *   JS 通过 localVarOf$apps 读取（脚本 API 没有 PkgSet 接口）。\n * ===================================================================== */\nvar __out;\n\n(function () {\n\n  var A = android;\n  var LOG = [];\n  function L(s) { if (LOG.length < 10) LOG.push(String(s)); }\n\n  try {\n    /* ---------------- 0. Context ---------------- */\n    var ctx = null;\n    try { if (context) ctx = context; } catch (e0) {}\n    if (!ctx) { try { ctx = A.app.ActivityThread.currentApplication(); } catch (e1) {} }\n    if (!ctx) { __out = \"ERR|no-context\"; return; }\n    L(\"ctx\");\n\n    /* ---------------- 1. 链接 ---------------- */\n    var targetUrl = \"\";\n    try { targetUrl = String(url); } catch (e) {}\n    if (!targetUrl || targetUrl === \"null\" || targetUrl === \"undefined\") targetUrl = \"\";\n    if (!targetUrl) {\n      try { if (typeof localVarOf$url !== \"undefined\") targetUrl = String(localVarOf$url); } catch (e) {}\n    }\n    if (!targetUrl) { __out = \"ERR|no-url\"; return; }\n    L(\"url\");\n\n    /* ---------------- 2. 应用列表（原生动作写入的局部变量 apps） ---------------- */\n    var raw = \"\";\n    try {\n      if (typeof localVarOf$apps !== \"undefined\") raw = String(localVarOf$apps);\n    } catch (e) {}\n\n    var pkgs = [];\n    var parts = (raw || \"\").split(\",\");\n    for (var i = 0; i < parts.length; i++) {\n      var s0 = parts[i].replace(/^[\\s\\r\\n]+|[\\s\\r\\n]+$/g, \"\");\n      if (s0 && s0 !== \"null\" && s0 !== \"undefined\" && pkgs.indexOf(s0) < 0) pkgs.push(s0);\n    }\n    L(\"apps:\" + pkgs.length);\n\n    var isFallback = false;\n    if (pkgs.length === 0) {\n      isFallback = true;\n      try {\n        var pmQ = ctx.getPackageManager();\n        var ris = pmQ.queryIntentActivities(\n          new A.content.Intent(A.content.Intent.ACTION_VIEW, A.net.Uri.parse(targetUrl)), 0);\n        for (var m = 0; m < ris.size(); m++) {\n          var qp = String(ris.get(m).activityInfo.packageName);\n          if (qp && pkgs.indexOf(qp) < 0) pkgs.push(qp);\n        }\n      } catch (eFb) {}\n      L(\"fb:\" + pkgs.length);\n    }\n\n    /* ---------------- 3. 尺寸与配色（[a,r,g,b]，alpha 必须 255） ---------------- */\n    var dm = ctx.getResources().getDisplayMetrics();\n    var density = dm.density;\n    function dp(v) { return Math.round(v * density); }\n\n    var night = false;\n    try { night = ((ctx.getResources().getConfiguration().uiMode & 0x30) === 0x20); } catch (e) {}\n\n    var C_MASK  = [150, 0, 0, 0];\n    var C_BG    = night ? [255, 38, 38, 42]    : [255, 252, 252, 253];\n    var C_TITLE = night ? [255, 238, 238, 240] : [255, 20, 20, 20];\n    var C_SUB   = night ? [255, 152, 152, 158] : [255, 130, 130, 136];\n    var C_TEXT  = night ? [255, 232, 232, 236] : [255, 28, 28, 30];\n    var C_LINE  = night ? [255, 62, 62, 68]    : [255, 233, 233, 237];\n    var C_ACC   = night ? [255, 96, 154, 245]  : [255, 38, 108, 232];\n    var C_WARN  = night ? [255, 226, 150, 90]  : [255, 200, 108, 38];\n\n    var SW = dm.widthPixels;\n    var SH = dm.heightPixels;\n\n    var wm = ctx.getSystemService(\"window\");\n    if (!wm) { __out = \"ERR|no-wm\"; return; }\n\n    /* ---------------- 3.1 导航栏高度（仅作 insets 取不到时的兜底） ---------------- */\n    var navH = 0;\n    var navOk = false;\n    try {\n      var wmi = wm.getCurrentWindowMetrics();\n      navH = wmi.getWindowInsets().getInsets(7).bottom;   /* 7 = 状态栏|导航栏|标题栏 */\n      navOk = true;\n    } catch (eWi) {}\n    if (!navOk) {\n      try {\n        var res0 = ctx.getResources();\n        var idNav = res0.getIdentifier(\"navigation_bar_height\", \"dimen\", \"android\");\n        if (idNav > 0) navH = res0.getDimensionPixelSize(idNav);\n      } catch (eNi) {}\n    }\n    if (navH < 0) navH = 0;\n    if (navH > dp(80)) navH = dp(80);\n\n    /* 卡片底边到「可显示区底边」的呼吸留白。\n     * 想更贴底就调小（0 也合法），想抬起来就调大。 */\n    var BOTTOM_GAP_DP = 6;\n    L(\"nav:\" + navH);\n\n    /* ---------------- 4. 动作 ---------------- */\n    var root = null;\n    var iv = null;\n    var HITS = [];        /* 命中矩形，paintPanel 写、触摸读（纯 JS 变量，不挂 Java 对象） */\n    var CARD_Y = 0;\n    var paintTries = 0;\n    var NOTICE = \"\";      /* 面板内的失败提示（不用吐司） */\n\n    var closeOverlay = function () {\n      try { if (root) wm.removeView(root); } catch (eRv) {}\n    };\n\n    /* 失败提示画在面板里（不弹吐司）：先重绘一帧，3 秒后自动抹掉 */\n    var showNotice = function (msg) {\n      try {\n        NOTICE = msg;\n        mainH.post(new java.lang.Runnable({ run: function () { paintPanel(); } }));\n        mainH.postDelayed(new java.lang.Runnable({\n          run: function () {\n            try { NOTICE = \"\"; paintPanel(); } catch (eN) {}\n          }\n        }), 3000);\n      } catch (eSn) {}\n    };\n\n    /* 一个应用吃链接的方式不止一种，按「打开 → 打开+type → 分享 → 显式组件」投递。\n     * 每次点击先用 resolveActivity 问系统「这个包能吃哪种」，命中即投，不盲试。 */\n    var I_VIEW  = A.content.Intent.ACTION_VIEW;\n    var I_SEND  = \"android.intent.action.SEND\";\n    var I_TEXT  = \"android.intent.extra.TEXT\";\n\n    var startIt = function (it) {\n      try {\n        it.addFlags(A.content.Intent.FLAG_ACTIVITY_NEW_TASK);\n        try {\n          if (!ctx.getPackageManager().resolveActivity(it, 0)) return false;\n        } catch (eR) {}\n        ctx.startActivity(it);\n        return true;\n      } catch (eSt) { return false; }\n    };\n\n    /* ① 打开：ACTION_VIEW + data（浏览器、1DM、ADM 都走这条） */\n    var viewDataTo = function (pkg, u) {\n      try {\n        var i1 = new A.content.Intent(I_VIEW, u);\n        i1.setPackage(pkg);\n        if (startIt(i1)) return \"view\";\n      } catch (e1) {}\n\n      try {\n        var i2 = new A.content.Intent(I_VIEW, u);\n        i2.addCategory(\"android.intent.category.BROWSABLE\");\n        i2.setPackage(pkg);\n        if (startIt(i2)) return \"view+brow\";\n      } catch (e2) {}\n\n      return \"\";\n    };\n\n    /* ② 打开 + type：filter 里写了 mimeType 的必须带 type 才匹配（Ghost Downloader） */\n    var viewTTo = function (pkg, u) {\n      try {\n        var i3 = new A.content.Intent(I_VIEW);\n        i3.setDataAndType(u, \"*/*\");\n        i3.setPackage(pkg);\n        if (startIt(i3)) return \"view+type\";\n      } catch (e3) {}\n      return \"\";\n    };\n\n    /* ③ 分享文本：从 EXTRA_TEXT 取链接的（FluxDown，以及绝大多数浏览器的\"分享到\"入口） */\n    var sendTo = function (pkg) {\n      try {\n        var s1 = new A.content.Intent(I_SEND);\n        s1.setType(\"text/plain\");\n        s1.putExtra(I_TEXT, targetUrl);\n        s1.setPackage(pkg);\n        if (startIt(s1)) return \"send\";\n      } catch (e4) {}\n\n      try {\n        var s2 = new A.content.Intent(I_SEND);\n        s2.setType(\"*/*\");\n        s2.putExtra(I_TEXT, targetUrl);\n        s2.setPackage(pkg);\n        if (startIt(s2)) return \"send*\";\n      } catch (e5) {}\n\n      return \"\";\n    };\n\n    /* ④ 显式组件兜底：拿它自己的启动 Activity，绕过 intent-filter 匹配 */\n    var launchTo = function (pkg, u) {\n      try {\n        var li = ctx.getPackageManager().getLaunchIntentForPackage(pkg);\n        if (li) {\n          try { li.setAction(I_VIEW); } catch (eA1) {}\n          try { li.setData(u); } catch (eA2) {}\n          try { li.putExtra(I_TEXT, targetUrl); } catch (eA3) {}\n          if (startIt(li)) return \"launch\";\n        }\n      } catch (e6) {}\n      return \"\";\n    };\n\n    /* ===== 分类投递 =====\n     * 「需要带 mimeType 才匹配」的应用名单，来自规则里的局部变量 needTypePkgs。\n     * 改名单不用进脚本编辑器：直接在 ShortX 那条 WriteLocalVar 里改文本即可，\n     * 支持中英文逗号、分号、空格、换行分隔，例如：\n     *     com.xychr.ghostdownloader, com.example.app\n     * 变量缺失或为空时退回内置默认值，脚本单独拷走也能跑。 */\n    var DEFAULT_NEED_TYPE = \"com.xychr.ghostdownloader\";\n\n    var needRaw = \"\";\n    try {\n      if (typeof localVarOf$needTypePkgs !== \"undefined\" && localVarOf$needTypePkgs != null) {\n        needRaw = String(localVarOf$needTypePkgs);\n      }\n    } catch (eNt0) {}\n    if (needRaw.replace(/[\\s,，;；]/g, \"\") === \"\") needRaw = DEFAULT_NEED_TYPE;\n\n    var NEED_TYPE = {};\n    var needParts = needRaw.split(/[\\s,，;；]+/);\n    for (var ni = 0; ni < needParts.length; ni++) {\n      if (needParts[ni]) NEED_TYPE[needParts[ni]] = true;\n    }\n\n    var needTypeOf = function (pkg) {\n      try { return NEED_TYPE[pkg] === true; } catch (eNt) { return false; }\n    };\n\n    var openWith = function (pkg) {\n      var u = null;\n      try { u = A.net.Uri.parse(targetUrl); } catch (eU) { return \"\"; }\n\n      var r = \"\";\n\n      if (needTypeOf(pkg)) {\n        /* 第一类：必须带 mimeType（Ghost Downloader）—— 先带 type，再退裸 data */\n        r = viewTTo(pkg, u);    if (r) return r;\n        r = viewDataTo(pkg, u); if (r) return r;\n      } else {\n        /* 第二类：标准浏览器 / 下载器 —— 先裸 data，再退带 type */\n        r = viewDataTo(pkg, u); if (r) return r;\n        r = viewTTo(pkg, u);    if (r) return r;\n      }\n\n      /* 两类共用的静默兜底：分享文本 → 显式组件拉起 */\n      r = sendTo(pkg);        if (r) return r;\n      return launchTo(pkg, u);\n    };\n\n    var copyUrl = function () {\n      try {\n        var cm = ctx.getSystemService(\"clipboard\");\n        if (!cm) return false;\n        cm.setPrimaryClip(A.content.ClipData.newPlainText(\"url\", targetUrl));\n        return true;\n      } catch (eCb) { return false; }\n    };\n\n    /* ---------------- 5. 同步切主线程 ---------------- */\n    function runOnMain(fn) {\n      var latch = new java.util.concurrent.CountDownLatch(1);\n      var err = null;\n      new A.os.Handler(A.os.Looper.getMainLooper()).post(new java.lang.Runnable({\n        run: function () {\n          try { fn(); } catch (e) { err = e; } finally { latch.countDown(); }\n        }\n      }));\n      try { latch.await(8, java.util.concurrent.TimeUnit.SECONDS); } catch (eAw) { L(\"awaitTimeout\"); }\n      if (err) throw err;\n    }\n\n    var mainH = new A.os.Handler(A.os.Looper.getMainLooper());\n\n    /* ---------------- 6. 按窗口真实尺寸绘制 ----------------\n     * W/H 来自 root 实际布局结果；insB 来自该窗口自己的 WindowInsets。\n     * 两者都拿不到时才退回 dm 与 navH。 */\n    function paintPanel() {\n      try {\n        var W = root ? root.getWidth() : 0;\n        var H = root ? root.getHeight() : 0;\n        if (W <= 0 || H <= 0) {\n          if (paintTries < 8) {\n            paintTries++;\n            mainH.postDelayed(new java.lang.Runnable({ run: function () { paintPanel(); } }), 40);\n            return;\n          }\n          W = SW; H = SH;   /* 极端兜底：布局迟迟拿不到，按屏幕尺寸画 */\n        }\n\n        /* 该窗口底部被系统栏遮挡的高度（手势导航时通常为 0） */\n        var insB = 0, insOk = false;\n        try {\n          var wi = root ? root.getRootWindowInsets() : null;\n          if (wi) {\n            try { insB = wi.getInsets(7).bottom; insOk = true; }\n            catch (eW1) {\n              try { insB = wi.getSystemWindowInsetBottom(); insOk = true; } catch (eW2) {}\n            }\n          }\n        } catch (eW0) {}\n        if (!insOk) insB = navH;\n        if (insB < 0) insB = 0;\n\n        var botGap = insB + dp(BOTTOM_GAP_DP);\n\n        var PAD     = dp(18);\n        var cardX   = dp(10);\n        var cardW   = W - dp(20);\n        var rowH    = dp(58);\n        var titleH  = dp(28);\n        var urlH    = dp(18);\n        var tipH    = isFallback ? dp(18) : 0;\n        var btnH    = dp(44);\n        var topIn   = dp(16);\n        var botIn   = dp(8);\n        var gapTop  = dp(8);   /* 副标题与列表之间 */\n        var gapBot  = dp(8);   /* 列表与按钮之间 */\n\n        /* 固定部分总高：标题 + 链接 + (提示) + 间隙 + 只有「取消」一个 44dp 按钮 */\n        var noticeH = NOTICE ? dp(20) : 0;\n        var fixedH = topIn + titleH + urlH + tipH + noticeH + gapTop + gapBot + btnH + botIn;\n        /* 顶部至少给状态栏留 48dp，不能顶出屏幕 */\n        var availH = H - botGap - dp(48);\n\n        var maxRows = Math.floor((availH - fixedH) / rowH);\n        if (maxRows > 12) maxRows = 12;\n        if (maxRows < 3) maxRows = 3;\n\n        /* 应用太多：先压行高（不低于 46dp），还放不下才截断并提示 */\n        if (pkgs.length > maxRows) {\n          var fit = Math.floor((availH - fixedH) / pkgs.length);\n          if (fit >= dp(46)) { rowH = fit; maxRows = pkgs.length; }\n        }\n\n        var rows      = pkgs.slice(0, maxRows);\n        var truncated = pkgs.length - rows.length;\n        var truncH    = truncated > 0 ? dp(18) : 0;\n        var listH     = rows.length * rowH;\n        var cardH     = fixedH + listH + truncH;\n        var cardY     = H - botGap - cardH;\n        if (cardY < dp(36)) cardY = dp(36);\n\n        /* ---- 画布 ---- */\n        var bmp = A.graphics.Bitmap.createBitmap(W, H, A.graphics.Bitmap.Config.ARGB_8888);\n        var cvs = new A.graphics.Canvas(bmp);\n        var p   = new A.graphics.Paint();\n        p.setAntiAlias(true);\n\n        function fillRR(x0, y0, x1, y1, r, c) {\n          p.setStyle(A.graphics.Paint.Style.FILL);\n          p.setARGB(c[0], c[1], c[2], c[3]);\n          cvs.drawRoundRect(x0, y0, x1, y1, r, r, p);\n        }\n        function fillRect(x0, y0, x1, y1, c) {\n          p.setStyle(A.graphics.Paint.Style.FILL);\n          p.setARGB(c[0], c[1], c[2], c[3]);\n          cvs.drawRect(x0, y0, x1, y1, p);\n        }\n        function text(t, x, baseY, size, c, bold) {\n          p.setStyle(A.graphics.Paint.Style.FILL);\n          p.setTextSize(size);\n          p.setFakeBoldText(!!bold);\n          p.setARGB(c[0], c[1], c[2], c[3]);\n          cvs.drawText(String(t), x, baseY, p);\n        }\n        function measure(t, size) {\n          p.setTextSize(size);\n          return p.measureText(String(t));\n        }\n        function ellip(t, size, maxW) {\n          var str = String(t);\n          p.setTextSize(size);\n          if (p.measureText(str) <= maxW) return str;\n          var dot = p.measureText(\"…\");\n          var n = 0;\n          try { n = p.breakText(str, true, maxW - dot, null); } catch (eB) { n = Math.floor(str.length / 2); }\n          if (n < 0) n = 0;\n          return str.substring(0, n) + \"…\";\n        }\n\n        /* ---- 遮罩 ---- */\n        fillRect(0, 0, W, H, C_MASK);\n\n        /* ---- 卡片 ---- */\n        fillRR(cardX, cardY, cardX + cardW, cardY + cardH, dp(18), C_BG);\n\n        var innerX = cardX + PAD;\n        var innerW = cardW - PAD * 2;\n        var yy = cardY + topIn;\n\n        var hits = [];\n\n        /* ---- 标题行：左边标题，右边「复制链接」 ---- */\n        var copyT     = \"复制链接\";\n        var copySz    = dp(13);\n        var copyTW    = measure(copyT, copySz);\n        var copyBtnW  = copyTW + dp(18);\n        var copyBtnX1 = innerX + innerW;\n        var copyBtnX0 = copyBtnX1 - copyBtnW;\n        var copyBtnY0 = yy - dp(3);\n        var copyBtnY1 = yy + dp(25);\n\n        text(ellip(\"选择应用打开链接\", dp(17), copyBtnX0 - dp(10) - innerX),\n             innerX, yy + dp(18), dp(17), C_TITLE, true);\n        text(copyT, copyBtnX0 + Math.round((copyBtnW - copyTW) / 2),\n             yy + dp(15), copySz, C_ACC, false);\n\n        hits.push({ y0: copyBtnY0, y1: copyBtnY1, kind: \"copy\",\n                    xr: true, x0: copyBtnX0, x1: copyBtnX1 });\n\n        yy += titleH;\n\n        text(ellip(targetUrl, dp(11), innerW), innerX, yy + dp(12), dp(11), C_SUB, false);\n        yy += urlH;\n\n        if (isFallback) {\n          var tip = pkgs.length === 0\n            ? \"应用集「打开链接」为空，也没有可处理该链接的应用\"\n            : \"应用集「打开链接」为空，已列出可处理该链接的应用\";\n          text(ellip(tip, dp(11), innerW), innerX, yy + dp(12), dp(11), C_WARN, false);\n          yy += tipH;\n        }\n\n        if (NOTICE) {\n          text(ellip(NOTICE, dp(11), innerW), innerX, yy + dp(12), dp(11), C_WARN, false);\n          yy += noticeH;\n        }\n        yy += gapTop;\n\n        /* ---- 列表 ---- */\n        var pm = null;\n        try { pm = ctx.getPackageManager(); } catch (ePm) {}\n\n        var listTop = yy;\n        var iconSz = Math.max(dp(26), Math.min(dp(34), rowH - dp(14)));\n\n        for (var r = 0; r < rows.length; r++) {\n          var pkg = rows[r];\n          var rowTop = listTop + r * rowH;\n\n          var ix = innerX;\n          var iy = rowTop + Math.round((rowH - iconSz) / 2);\n          if (pm) {\n            try {\n              var dIcon = pm.getApplicationIcon(pkg);\n              dIcon.setBounds(ix, iy, ix + iconSz, iy + iconSz);\n              dIcon.draw(cvs);\n            } catch (eIc) {\n              fillRR(ix, iy, ix + iconSz, iy + iconSz, dp(8), C_LINE);\n            }\n          } else {\n            fillRR(ix, iy, ix + iconSz, iy + iconSz, dp(8), C_LINE);\n          }\n\n          var label = pkg;\n          if (pm) {\n            try { label = String(pm.getApplicationLabel(pm.getApplicationInfo(pkg, 0))); } catch (eLb) {}\n          }\n          var tx = ix + iconSz + dp(12);\n          var txW = innerX + innerW - tx;\n          var midY = rowTop + Math.round(rowH / 2);\n          text(ellip(label, dp(15), txW), tx, midY - dp(1), dp(15), C_TEXT, false);\n          text(ellip(pkg, dp(10), txW), tx, midY + dp(14), dp(10), C_SUB, false);\n\n          if (r < rows.length - 1) {\n            fillRect(innerX, rowTop + rowH - 1, innerX + innerW, rowTop + rowH, C_LINE);\n          }\n\n          hits.push({ y0: rowTop, y1: rowTop + rowH, kind: \"pkg\", pkg: pkg, label: label });\n        }\n\n        yy = listTop + listH;\n\n        /* ---- 截断提示（应用多于屏高时才有） ---- */\n        if (truncated > 0) {\n          fillRect(innerX, yy, innerX + innerW, yy + 1, C_LINE);\n          var trT = \"另有 \" + truncated + \" 个应用未显示（可精简「打开链接」应用集）\";\n          text(ellip(trT, dp(10), innerW), innerX, yy + dp(13), dp(10), C_SUB, false);\n          yy += truncH;\n        }\n\n        yy += gapBot;\n\n        /* ---- 取消（面板最后一项） ---- */\n        fillRect(innerX, yy, innerX + innerW, yy + 1, C_LINE);\n        text(\"取消\", innerX + Math.round((innerW - measure(\"取消\", dp(15))) / 2),\n             yy + Math.round(btnH / 2) + dp(6), dp(15), C_SUB, false);\n        hits.push({ y0: yy, y1: yy + btnH, kind: \"cancel\" });\n\n        /* ---- 贴上图片 ---- */\n        try { if (iv) root.removeView(iv); } catch (eRi) {}\n        iv = new A.widget.ImageView(ctx);\n        iv.setImageBitmap(bmp);\n        try { iv.setScaleType(A.widget.ImageView.ScaleType.FIT_XY); } catch (eSc) {}\n        iv.setClickable(false);\n        iv.setFocusable(false);\n        root.addView(iv, new A.widget.FrameLayout.LayoutParams(-1, -1));\n\n        HITS = hits;\n        CARD_Y = cardY;\n        L(\"painted:\" + W + \"x\" + H + \",insB:\" + insB);\n      } catch (ePaint) {\n        L(\"paintErr:\" + String(ePaint).substring(0, 40));\n      }\n    }\n\n    /* ---------------- 7. 挂空窗 → 布局完成 → 绘制 ---------------- */\n    runOnMain(function () {\n\n      root = new A.widget.FrameLayout(ctx);\n\n      var downY = -1, downX = -1;\n\n      root.setOnTouchListener(new JavaAdapter(A.view.View.OnTouchListener, {\n        onTouch: function (v, ev) {\n          try {\n            var act = ev.getActionMasked();\n            if (act === 0) { downY = ev.getY(); downX = ev.getX(); return true; }\n            if (act === 1) {\n              var upY = ev.getY();\n              var upX = ev.getX();\n              if (downY >= 0 && Math.abs(upY - downY) < dp(16)) {\n                for (var k = 0; k < HITS.length; k++) {\n                  var h = HITS[k];\n                  var inY = upY >= h.y0 && upY < h.y1;\n                  var inX = !h.xr || (upX >= h.x0 && upX < h.x1);\n                  if (inY && inX) {\n                    if (h.kind === \"pkg\") {\n                      var way = openWith(h.pkg);\n                      if (way) {\n                        closeOverlay();\n                      } else {\n                        showNotice(\"「\" + (h.label || h.pkg) + \"」无法打开这个链接\");\n                      }\n                    } else if (h.kind === \"copy\") {\n                      copyUrl();\n                      closeOverlay();\n                    } else {\n                      closeOverlay();\n                    }\n                    return true;\n                  }\n                }\n                if (upY < CARD_Y) closeOverlay();\n              }\n              downY = -1; downX = -1;\n              return true;\n            }\n            if (act === 3) { downY = -1; downX = -1; return true; }\n          } catch (eT) {}\n          return true;\n        }\n      }));\n\n      var lp = new A.view.WindowManager.LayoutParams(\n        A.view.WindowManager.LayoutParams.MATCH_PARENT,\n        A.view.WindowManager.LayoutParams.MATCH_PARENT,\n        A.view.WindowManager.LayoutParams.TYPE_APPLICATION_OVERLAY,\n        A.view.WindowManager.LayoutParams.FLAG_NOT_FOCUSABLE\n          | A.view.WindowManager.LayoutParams.FLAG_LAYOUT_IN_SCREEN,\n        A.graphics.PixelFormat.TRANSLUCENT);\n      lp.gravity = A.view.Gravity.TOP | A.view.Gravity.LEFT;\n\n      wm.addView(root, lp);\n      L(\"shown\");\n    });\n\n    /* 布局完成后再画（root 此时才有真实宽高） */\n    mainH.postDelayed(new java.lang.Runnable({ run: function () { paintPanel(); } }), 60);\n\n    __out = \"OK|\" + LOG.join(\"|\");\n\n  } catch (fatal) {\n    var msg = String(fatal);\n    if (msg.length > 80) msg = msg.substring(0, 80);\n    __out = \"ERR|\" + msg + \"|\" + LOG.join(\"|\");\n    try {\n      if (root) wm.removeView(root);\n    } catch (eRm) {}\n  }\n\n})();\n\n__out;\n",
+              "customContextDataKey": {},
+              "note": "离屏 Bitmap 自绘底部面板；两分类投递，需带 type 的名单读局部变量 needTypePkgs",
+              "id": "A-f5607182-93a4-4b5c-9e6f-70011223344a"
+            }
+          ],
+          "description": "链接",
+          "id": "Case-2219b95e-7772-42a6-b002-8fab4ffca42b",
+          "isBreak": true
+        },
+        {
+          "case": [
+            {
+              "@type": "type.googleapis.com/RequireFactTag",
+              "tag": "X浏览器",
+              "customContextDataKey": {},
+              "id": "C-d6f4eccd-7ebb-4a81-afad-f618e60611df"
+            }
+          ],
+          "action": [
+            {
+              "@type": "type.googleapis.com/WriteClipboard",
+              "text": "{activityIntentUri}",
+              "customContextDataKey": {},
+              "isDisabled": true,
+              "id": "A-14f21b2f-8e67-44f0-996d-43b00467f5b6"
+            },
+            {
+              "@type": "type.googleapis.com/ShowOverlayButton",
+              "buttonSettings": [
+                {
+                  "actions": [
+                    {
+                      "@type": "type.googleapis.com/WriteClipboard",
+                      "text": "{activityIntentUri}",
+                      "customContextDataKey": {},
+                      "id": "A-9b191ef1-8757-4e67-b385-90f7a9fa8e09"
+                    },
+                    {
+                      "@type": "type.googleapis.com/HideOverlayButton",
+                      "overlayTags": [
+                        "FloatButton"
+                      ],
+                      "customContextDataKey": {},
+                      "id": "A-1559e77c-a0f6-4f76-9d72-aa1734caf42f"
+                    }
+                  ],
+                  "label": "复杂",
+                  "id": "BTN-55627eef-3b9c-4368-9501-e79db7715c5f"
+                }
+              ],
+              "tag": "FloatButton",
+              "maxHeightInDp": 500,
+              "maxWidthInDp": 500,
+              "backgroundAlpha": 0.8,
+              "buttonMinWidth": 64,
+              "enableGlobalDrag": true,
+              "disableAutoEdge": true,
+              "customContextDataKey": {},
+              "isDisabled": true,
+              "id": "A-db1db52a-f50f-4922-bcc0-d388dd2f0511"
+            },
+            {
+              "@type": "type.googleapis.com/ShowAlertDialog",
+              "message": "activityIntentUri\n{activityIntentUri}\n\ntaskLabel\n{taskLabel}\n\nappLabel\n{appLabel}\n\ncomponentName\n{componentName}\n\nuserId\n{userId}\n\npkgName\n{pkgName}",
+              "cancelable": true,
+              "style": {
+                "fontScale": 1.0
+              },
+              "customContextDataKey": {},
+              "id": "A-5e0edca3-5640-40e5-afb8-78c55fa94b8a"
+            }
+          ],
+          "description": "X浏览器",
+          "id": "Case-3fe7e9f8-555b-40d0-81a5-310b6e07eb09",
+          "isBreak": true,
+          "isDisabled": true
+        }
+      ],
+      "customContextDataKey": {},
+      "id": "A-60525c1e-5f9b-4037-9bd1-7981a3ec82fc"
+    },
+    {
+      "@type": "type.googleapis.com/ShowAlertDialog",
+      "message": "activityIntentUri\n{activityIntentUri}\n\ntaskLabel\n{taskLabel}\n\nappLabel\n{appLabel}\n\ncomponentName\n{componentName}\n\nuserId\n{userId}\n\npkgName\n{pkgName}",
+      "cancelable": true,
+      "style": {
+        "fontScale": 1.0
+      },
+      "customContextDataKey": {},
+      "isDisabled": true,
+      "id": "A-6b7c9ea4-3f86-4122-c370-1e6c9ad40855"
+    }
+  ],
+  "id": "SHARE-rule-4fb178f1-ca01-4953-a8d7-85e031e561b7",
+  "lastUpdateTime": "1794623238659",
+  "createTime": "1782312882779",
+  "author": {
+    "name": "ShortX"
+  },
+  "title": "链接拦截",
+  "isEnabled": true,
+  "hook": {},
+  "quit": {},
+  "versionCode": "1",
+  "ruleSetId": "RS-46ae74c6-5347-4ef0-bcde-1600cfb5dbf1"
+}
+###------###
+
+{"type":"rule"}

@@ -1,0 +1,448 @@
+{
+  "facts": [
+    {
+      "@type": "type.googleapis.com/BrowserIntercept",
+      "openUrlBrowserPkg": "",
+      "tag": "链接",
+      "customContextDataKey": {},
+      "id": "F-085d15c6-fecd-49a7-9cbc-6cc694fb653d",
+      "openUrlAfterTrigger": false
+    },
+    {
+      "@type": "type.googleapis.com/ActivityStarted",
+      "components": [
+        {
+          "pkg": {
+            "pkgName": "com.tencent.mm"
+          },
+          "className": "com.tencent.mm.plugin.webview.ui.tools.MMWebViewUI"
+        }
+      ],
+      "tag": "微信",
+      "customContextDataKey": {},
+      "id": "F-6ee8da7c-d725-4cb7-9fc0-68580b298a52"
+    }
+  ],
+  "actions": [
+    {
+      "@type": "type.googleapis.com/ShowAlertDialog",
+      "message": "url\n{url}\n\nhost\n{host}\n\nscheme\n{scheme}\n\npath\n{path}\n\nquery\n{query}\n\napp\n{sourceAppPkg}",
+      "cancelable": true,
+      "style": {
+        "fontScale": 1.0
+      },
+      "customContextDataKey": {},
+      "isDisabled": true,
+      "id": "A-3004dce3-5bce-454e-88f9-af19c889a9b9"
+    },
+    {
+      "@type": "type.googleapis.com/SwitchCase",
+      "case": [
+        {
+          "case": [
+            {
+              "@type": "type.googleapis.com/RequireFactTag",
+              "tag": "微信",
+              "customContextDataKey": {},
+              "id": "C-649461ae-cd5e-472d-aea0-cf82fc30d619"
+            }
+          ],
+          "action": [
+            {
+              "@type": "type.googleapis.com/ExecuteJS",
+              "expression": "var text = activityIntentUri;\nvar pattern = /S.rawUrl=(.*?);/;   \nvar match = text.match(pattern);\nif (match) {\n    var result = match[1];  \n    decodeURIComponent(result);\n}else \"nolink\"",
+              "customContextDataKey": {
+                "keys": [
+                  {
+                    "first": "jsRet",
+                    "second": "url"
+                  }
+                ]
+              },
+              "id": "A-7d834ab6-8b01-4e81-a0d9-002c30d8d2fd"
+            },
+            {
+              "@type": "type.googleapis.com/WriteLocalVar",
+              "varName": "urlA",
+              "valueAsString": "{url}",
+              "autoCreateIfMissing": true,
+              "customContextDataKey": {},
+              "id": "A-124d5d5d-e7e9-45ee-8367-6a27e65dd1bd"
+            },
+            {
+              "@type": "type.googleapis.com/ShowOverlayButton",
+              "buttonSettings": [
+                {
+                  "actions": [
+                    {
+                      "@type": "type.googleapis.com/WriteLocalVar",
+                      "varName": "url",
+                      "valueAsString": "localVarOf$urlA",
+                      "autoCreateIfMissing": true,
+                      "customContextDataKey": {},
+                      "id": "A-1fcfdd0f-a250-4ccb-bca5-9f147556ea90"
+                    },
+                    {
+                      "@type": "type.googleapis.com/OpenUrl",
+                      "url": "localVarOf$url",
+                      "browserPkg": "tornaco.apps.shortx",
+                      "customContextDataKey": {},
+                      "id": "A-46ebb30b-7ea0-4440-83bc-b963cf08faf2"
+                    },
+                    {
+                      "@type": "type.googleapis.com/CloseActivity",
+                      "component": {},
+                      "customContextDataKey": {},
+                      "isDisabled": true,
+                      "id": "A-75ac7ae0-83ad-439f-bd4d-a2564d1d116e"
+                    },
+                    {
+                      "@type": "type.googleapis.com/HideOverlayButton",
+                      "overlayTags": [
+                        "FloatButton"
+                      ],
+                      "customContextDataKey": {},
+                      "id": "A-850a54e7-e56b-433a-a19d-d21b0ac872ae"
+                    }
+                  ],
+                  "label": "打开链接？\n{url}",
+                  "id": "BTN-d5a59cf7-dbb5-44f8-a0ba-1fdb82c5cfed"
+                }
+              ],
+              "tag": "FloatButton",
+              "maxHeightInDp": 115,
+              "maxWidthInDp": 115,
+              "backgroundAlpha": 0.8,
+              "buttonMinWidth": 500,
+              "enableGlobalDrag": true,
+              "disableAutoEdge": true,
+              "customContextDataKey": {},
+              "id": "A-00d463ee-2205-4505-84df-3c75b662908c"
+            },
+            {
+              "@type": "type.googleapis.com/Delay",
+              "timeString": "2",
+              "timeUnit": "TimeUnit_S",
+              "customContextDataKey": {},
+              "id": "A-175b05aa-f337-4c3c-8bed-80c721f1bcef"
+            },
+            {
+              "@type": "type.googleapis.com/HideOverlayButton",
+              "overlayTags": [
+                "FloatButton"
+              ],
+              "customContextDataKey": {},
+              "id": "A-1943f46b-d36b-49c2-852d-6bac74be7bf9"
+            }
+          ],
+          "description": "微信",
+          "id": "Case-0ac0c5a9-afd1-4ab7-b000-f184275f9979",
+          "isBreak": true
+        },
+        {
+          "case": [
+            {
+              "@type": "type.googleapis.com/RequireFactTag",
+              "tag": "链接",
+              "customContextDataKey": {},
+              "id": "C-5007bc77-8d79-495b-8ceb-1f8fa00e39ce"
+            }
+          ],
+          "action": [
+            {
+              "@type": "type.googleapis.com/IfThenElse",
+              "If": [
+                {
+                  "@type": "type.googleapis.com/EvaluateContextVar",
+                  "op": "Contains",
+                  "varName": "url",
+                  "payload": {
+                    "value": "github"
+                  },
+                  "isDisabled": true,
+                  "customContextDataKey": {},
+                  "id": "C-43a0afb6-9ea9-4669-8c42-d985778d29c9"
+                },
+                {
+                  "@type": "type.googleapis.com/VPNIsConnected",
+                  "customContextDataKey": {},
+                  "isInvert": true,
+                  "id": "C-2c35838e-d9fb-4303-9a47-3ca5515cc32d"
+                },
+                {
+                  "@type": "type.googleapis.com/MatchJS",
+                  "expression": "(function() {\n    // ========================================================\n    // 📌 1. 【可配置区域】修改你的目标变量和正则表达式\n    // ========================================================\n    \n    // 传入的待检查变量（在 ShortX 中可以写成 shortx.getVariable(\"LinkUrl\")）\n    var url = localVarOf$url; \n\n    // 需要匹配的正则表达式数组\n    var regexPatterns = [\n        /^https:\\/\\/github\\.com\\//  // 匹配以 https://github.com/ 开头\n    ];\n\n    // ========================================================\n    // ⚙️ 2. 【核心逻辑区域】通用遍历匹配逻辑（无需修改）\n    // ========================================================\n    var isMatched = false;\n\n    // 如果变量为空，直接返回 false\n    if (!url) {\n        return false;\n    }\n\n    // 遍历正则数组，只要其中有一个正则表达式匹配成功，就将状态标记为 true 并跳出循环\n    for (var i = 0; i < regexPatterns.length; i++) {\n        if (regexPatterns[i].test(url)) {\n            isMatched = true;\n            break; // 匹配到一个就足够了，立刻提前结束循环\n        }\n    }\n\n    // ========================================================\n    // 🚀 3. 【输出结果】返回布尔值结果\n    // ========================================================\n    return isMatched; // 匹配成功输出 true，全部不匹配输出 false\n})();\n",
+                  "customContextDataKey": {},
+                  "id": "C-07843571-1ecf-424a-9028-eeff19947e8e"
+                }
+              ],
+              "IfActions": [
+                {
+                  "@type": "type.googleapis.com/FromDA",
+                  "daId": "DA-97c74fa7-f645-464d-a0cf-fd7a6a195db5",
+                  "customContextDataKey": {},
+                  "id": "A-3a2ec2e5-066d-4768-b45f-945f770d6d86"
+                }
+              ],
+              "customContextDataKey": {},
+              "id": "A-ff10333a-941c-4551-b1ef-74907d00a2bd"
+            },
+            {
+              "@type": "type.googleapis.com/IfThenElse",
+              "If": [
+                {
+                  "@type": "type.googleapis.com/EvaluateContextVar",
+                  "op": "Contains",
+                  "varName": "url",
+                  "payload": {
+                    "value": "coolapk.com/link?url="
+                  },
+                  "customContextDataKey": {},
+                  "id": "C-fe2f987e-ee3b-4cad-b789-61e1bdf09f17"
+                }
+              ],
+              "IfActions": [
+                {
+                  "@type": "type.googleapis.com/ExecuteJS",
+                  "expression": "url = decodeURIComponent(url.replace(/^.*[?&]url=([^&]+).*$/, \"$1\"));",
+                  "customContextDataKey": {
+                    "keys": [
+                      {
+                        "first": "jsRet",
+                        "second": "url"
+                      }
+                    ]
+                  },
+                  "id": "A-1272d9e2-d21d-484d-ad73-b26e113ce8ac"
+                }
+              ],
+              "customContextDataKey": {},
+              "id": "A-f8106efd-0fef-4446-b2aa-d7145d9a05bc"
+            },
+            {
+              "@type": "type.googleapis.com/CreateLocalVar",
+              "localVar": {
+                "name": "apps",
+                "type": {
+                  "@type": "type.googleapis.com/StringVar"
+                }
+              },
+              "customContextDataKey": {},
+              "note": "创建局部变量 apps，存放应用集包名列表",
+              "id": "A-7a1b2c3d-4e5f-4061-8a2b-3c4d5e6f7081"
+            },
+            {
+              "@type": "type.googleapis.com/WriteLocalVar",
+              "varName": "apps",
+              "valueAsString": "",
+              "customContextDataKey": {},
+              "note": "清空 apps，避免跨次触发残留",
+              "id": "A-8b2c3d4e-5f60-4172-9b3c-4d5e6f708192"
+            },
+            {
+              "@type": "type.googleapis.com/ForEachPkgSet",
+              "pkgSet": "打开链接",
+              "action": [
+                {
+                  "@type": "type.googleapis.com/WriteLocalVar",
+                  "varName": "apps",
+                  "valueAsString": "localVarOf$apps{loopAppPkgName},",
+                  "customContextDataKey": {},
+                  "note": "追加当前应用包名",
+                  "id": "A-0d4e5f60-7182-4294-ad5e-6f708192a3b4"
+                }
+              ],
+              "customContextDataKey": {},
+              "note": "读取应用集「打开链接」的每个应用",
+              "id": "A-9c3d4e5f-6071-4283-8c4d-5e6f708192a3"
+            },
+            {
+              "@type": "type.googleapis.com/ShowToast",
+              "message": "应用列表已生成，正在弹出选择对话框",
+              "customContextDataKey": {},
+              "note": "诊断：确认动作链走过 ForEachPkgSet。正常后可禁用",
+              "id": "A-1e5f6071-8293-43a4-9e5f-708192a3b4c5"
+            },
+            {
+              "@type": "type.googleapis.com/ShowListDialog",
+              "title": "选择应用打开链接",
+              "message": "{url}",
+              "cancelable": true,
+              "data": "localVarOf$apps,取消",
+              "delimiter": [
+                ","
+              ],
+              "style": {},
+              "customContextDataKey": {
+                "keys": [
+                  {
+                    "first": "selectedListItem",
+                    "second": "choosepkg"
+                  }
+                ]
+              },
+              "note": "ShortX 原生对话框，选择结果写入上下文变量 choosepkg",
+              "id": "A-2f607182-93a4-44b5-8f60-8192a3b4c5d6"
+            },
+            {
+              "@type": "type.googleapis.com/IfThenElse",
+              "If": [
+                {
+                  "@type": "type.googleapis.com/EvaluateContextVar",
+                  "op": "EqualTo",
+                  "varName": "choosepkg",
+                  "payload": {
+                    "value": "取消"
+                  },
+                  "customContextDataKey": {},
+                  "id": "C-3a607182-93a4-44b5-8f60-8192a3b4c5d7"
+                }
+              ],
+              "IfActions": [
+                {
+                  "@type": "type.googleapis.com/BreakActionExecute",
+                  "scope": "BreakActionExecuteScope_Root",
+                  "customContextDataKey": {},
+                  "id": "A-4b718293-a4b5-45c6-9071-92a3b4c5d6e8"
+                }
+              ],
+              "customContextDataKey": {},
+              "id": "A-3a607182-93a4-44b5-8f60-8192a3b4c5d7"
+            },
+            {
+              "@type": "type.googleapis.com/IfThenElse",
+              "If": [
+                {
+                  "@type": "type.googleapis.com/EvaluateContextVar",
+                  "op": "EqualTo",
+                  "varName": "choosepkg",
+                  "payload": {
+                    "value": ""
+                  },
+                  "customContextDataKey": {},
+                  "id": "C-5c8293a4-b5c6-46d7-a182-a3b4c5d6e8f9"
+                }
+              ],
+              "IfActions": [
+                {
+                  "@type": "type.googleapis.com/BreakActionExecute",
+                  "scope": "BreakActionExecuteScope_Root",
+                  "customContextDataKey": {},
+                  "id": "A-6d93a4b5-c6d7-47e8-b293-b4c5d6e8f900"
+                }
+              ],
+              "customContextDataKey": {},
+              "id": "A-5c8293a4-b5c6-46d7-a182-a3b4c5d6e8f9"
+            },
+            {
+              "@type": "type.googleapis.com/OpenUrl",
+              "url": "{url}",
+              "browserPkg": "{choosepkg}",
+              "customContextDataKey": {},
+              "note": "用应用集里选中的应用打开链接",
+              "id": "A-7ea4b5c6-d7e8-48f9-c3a4-c5d6e8f90011"
+            }
+          ],
+          "description": "链接",
+          "id": "Case-2219b95e-7772-42a6-b002-8fab4ffca42b",
+          "isBreak": true
+        },
+        {
+          "case": [
+            {
+              "@type": "type.googleapis.com/RequireFactTag",
+              "tag": "X浏览器",
+              "customContextDataKey": {},
+              "id": "C-d6f4eccd-7ebb-4a81-afad-f618e60611df"
+            }
+          ],
+          "action": [
+            {
+              "@type": "type.googleapis.com/WriteClipboard",
+              "text": "{activityIntentUri}",
+              "customContextDataKey": {},
+              "isDisabled": true,
+              "id": "A-14f21b2f-8e67-44f0-996d-43b00467f5b6"
+            },
+            {
+              "@type": "type.googleapis.com/ShowOverlayButton",
+              "buttonSettings": [
+                {
+                  "actions": [
+                    {
+                      "@type": "type.googleapis.com/WriteClipboard",
+                      "text": "{activityIntentUri}",
+                      "customContextDataKey": {},
+                      "id": "A-9b191ef1-8757-4e67-b385-90f7a9fa8e09"
+                    },
+                    {
+                      "@type": "type.googleapis.com/HideOverlayButton",
+                      "overlayTags": [
+                        "FloatButton"
+                      ],
+                      "customContextDataKey": {},
+                      "id": "A-1559e77c-a0f6-4f76-9d72-aa1734caf42f"
+                    }
+                  ],
+                  "label": "复杂",
+                  "id": "BTN-55627eef-3b9c-4368-9501-e79db7715c5f"
+                }
+              ],
+              "tag": "FloatButton",
+              "maxHeightInDp": 500,
+              "maxWidthInDp": 500,
+              "backgroundAlpha": 0.8,
+              "buttonMinWidth": 64,
+              "enableGlobalDrag": true,
+              "disableAutoEdge": true,
+              "customContextDataKey": {},
+              "isDisabled": true,
+              "id": "A-db1db52a-f50f-4922-bcc0-d388dd2f0511"
+            },
+            {
+              "@type": "type.googleapis.com/ShowAlertDialog",
+              "message": "activityIntentUri\n{activityIntentUri}\n\ntaskLabel\n{taskLabel}\n\nappLabel\n{appLabel}\n\ncomponentName\n{componentName}\n\nuserId\n{userId}\n\npkgName\n{pkgName}",
+              "cancelable": true,
+              "style": {
+                "fontScale": 1.0
+              },
+              "customContextDataKey": {},
+              "id": "A-5e0edca3-5640-40e5-afb8-78c55fa94b8a"
+            }
+          ],
+          "description": "X浏览器",
+          "id": "Case-3fe7e9f8-555b-40d0-81a5-310b6e07eb09",
+          "isBreak": true,
+          "isDisabled": true
+        }
+      ],
+      "customContextDataKey": {},
+      "id": "A-60525c1e-5f9b-4037-9bd1-7981a3ec82fc"
+    },
+    {
+      "@type": "type.googleapis.com/ShowAlertDialog",
+      "message": "activityIntentUri\n{activityIntentUri}\n\ntaskLabel\n{taskLabel}\n\nappLabel\n{appLabel}\n\ncomponentName\n{componentName}\n\nuserId\n{userId}\n\npkgName\n{pkgName}",
+      "cancelable": true,
+      "style": {
+        "fontScale": 1.0
+      },
+      "customContextDataKey": {},
+      "isDisabled": true,
+      "id": "A-6b7c9ea4-3f86-4122-c370-1e6c9ad40855"
+    }
+  ],
+  "id": "SHARE-rule-4fb178f1-ca01-4953-a8d7-85e031e561b7",
+  "lastUpdateTime": "1794587009858",
+  "createTime": "1782312882779",
+  "author": {
+    "name": "ShortX"
+  },
+  "title": "链接拦截",
+  "isEnabled": true,
+  "hook": {},
+  "quit": {},
+  "versionCode": "1",
+  "ruleSetId": "RS-46ae74c6-5347-4ef0-bcde-1600cfb5dbf1"
+}
+###------###
+{"type":"rule"}
